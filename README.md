@@ -2,16 +2,21 @@
 
 A lightweight MCP server that exposes any OpenAPI specification as searchable tools — `search_api`, `get_endpoint`, `get_schema`, and `list_endpoints`. Drop in a YAML or JSON spec file and instantly give AI assistants precise, token-efficient access to your API's endpoints, parameters, and schemas, without hallucinations or guesswork.
 
+## Install
+
+```bash
+# From GitHub — no build step required
+npm install github:thurdas/openapi-mcp
+```
+
 ## Run
 
 ```bash
-# Development (no build step)
-npm run dev -- path/to/openapi.yaml
-OPENAPI_SPEC_PATH=path/to/openapi.yaml npm run dev
+# Via npx after install
+npx openapi-mcp path/to/openapi.yaml
 
-# Production
-npm run build
-npm start -- path/to/openapi.yaml
+# Development (from source)
+npm run dev -- path/to/openapi.yaml
 ```
 
 For Claude Desktop, add to `claude_desktop_config.json`:
@@ -19,8 +24,20 @@ For Claude Desktop, add to `claude_desktop_config.json`:
 {
   "mcpServers": {
     "openapi": {
+      "command": "node",
+      "args": ["node_modules/openapi-mcp/bin/openapi-mcp.js", "/path/to/openapi.yaml"]
+    }
+  }
+}
+```
+
+Or if installed globally / via npx:
+```json
+{
+  "mcpServers": {
+    "openapi": {
       "command": "npx",
-      "args": ["tsx", "/absolute/path/to/openapi-mcp/src/index.ts", "/path/to/openapi.yaml"]
+      "args": ["openapi-mcp", "/path/to/openapi.yaml"]
     }
   }
 }
